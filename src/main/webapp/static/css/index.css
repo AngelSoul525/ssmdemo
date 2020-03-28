@@ -187,8 +187,9 @@ body{
     font-family: 隶书, cursive;
     width:100%;
     /*margin:10% 10%;*/
-    margin-top: 10%;
-    height:80%;
+    margin-top: 3%;
+    padding-top: 5%;
+    height:50%;
     /*height:420px;*/
     padding-bottom:10%;
     display: none;
@@ -320,6 +321,9 @@ body{
 
 /*********************************messager information**********************************/
 .messagerInfo {
+    background-color: silver;
+    height: 50%;
+    padding: 20px 0;
     font-size:22px;
     font-family: 隶书, cursive;
     display: none;
@@ -328,6 +332,10 @@ body{
 .messagerInfo label {
     font-size: 25px;
 }
+
+/*.messagerInfo li:nth-child(odd) {*/
+/*    margin-top: 10px;*/
+/*}*/
 
 #btnModifyInfo {
     width: 50px;
@@ -343,6 +351,9 @@ body{
 
 /*********************************modify password***************************************/
 .modifyPass {
+    background-color: silver;
+    height: 50%;
+    padding: 20px 0;
     font-size:22px;
     font-family: 隶书, cursive;
     display: none;
