@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xyz.angelsoul.ssmdemo.dao.MessagesDao">
+
+    <!-- selectMessagesByUsername(String username)-->
+    <select id="selectMessagesByUsername" parameterType="String" resultType="map">
+        select message_id messageID, username, create_time createTime, delete_time deleteTime,
+            message_title messageTitle, message_content messageContent, star_num starNum, is_delete isDelete
+        from message where username = #{username}
+    </select>
+
+    <!-- selectMessages(Map<String, Object> para)where message_id = #{lastMessageID}-->
+    <select id="selectMessages" parameterType="map" resultType="map">
+        select message_id messageID, username, create_time createTime, delete_time deleteTime,
+            message_title messageTitle, message_content messageContent, star_num starNum, is_delete isDelete
+        from message
+        <if test="lastMessageID != 0">
+            where create_time &lt; (select create_time createTime from message where message_id = #{lastMessageID})
+        </if>
+        order by create_time desc
+        limit #{messagesNum}
+    </select>
+
+    <!-- saveMessage(Message message) -->
+    <insert id="saveMessage" parameterType="xyz.angelsoul.ssmdemo.model.Message">
+        insert into message
+            (message_id, username, create_time, delete_time, message_title, message_content, star_num, is_delete)
+        VALUES
+            (#{messageID}, #{username}, #{createTime}, #{deleteTime}, #{messageTitle}, #{messageContent}, #{starNum}, #{isDelete})
+    </insert>
+
+    <!-- updateMessagerInfo(Messager messager)
+    <update id="updateMessagerInfo" parameterType="map">
+        update userinfo
+        set
+        <trim suffixOverrides="," prefixOverrides=",">
+            <if test="password != null">
+                userpassword = #{password},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="borndate != null">
+                borntime = #{borndate},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="phone != null">
+                mobilephone = #{phone},
+            </if>
+        </trim>
+        where username = #{username}
+    </update>-->
+
+    <!-- selectMessagerByNickname(String nickname)
+    <select id="selectMessagerByNickname" parameterType="String" resultType="xyz.angelsoul.ssmdemo.model.Messager">
+        select username username, nickname nickname, userpassword password, borntime borndate, createtime createtime,
+                deletetime deletetime, email email, mobilephone phone, isdelete isdelete
+        from userinfo where nickname = #{nickname}
+    </select>-->
+
+</mapper>

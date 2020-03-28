@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="static/css/bar_bottom.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/index.css" />
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="static/image/favicon.ico"/>
+    <title>Welcome to the MessageBoard</title>
+</head>
+<body>
+    <div class="div_bar">
+        <div class="bar">
+            <div class="barLogo">MessageBoard</div>
+            <div class="bar_link">
+                <ul>
+                    <li id="showHome">主页</li>
+                    <li id="showLogin" class="noLogin">登录</li>
+                    <li id="showNickname">
+                        <span>昵称</span>
+                        <ul id="messagerOperate">
+                            <li id="showMessagerInfo">查看信息</li>
+                            <li id="showModifyPass">修改密码</li>
+                        </ul>
+                    </li>
+                    <li id="showRegister" class="noLogin">注册</li>
+                    <li id="btnLogout">退出</li>
+                </ul>
+                <!--        <span style="font-size: 20px; color: white;" onclick="window.location.href='toPersonInfo.do'"></span>-->
+                <!--        <span onclick="window.location.href='toRegist.do'">注册</span>-->
+                <!--        <span onclick="window.location.href='toLogout.do'">注销</span>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="main_home">
+        <div class="content">
+            <div class="shortcutBtn">
+                <img id="backToTop" src="static/image/toTop.png" /> <br/>
+<!--                <img src="static/image/newMessage.png" />-->
+            </div>
+            <div class="newMessaage">
+                <div class="newMessaageTitle">今天想记录点什么呢？</div>
+                <textarea></textarea>
+                <div class="divBtnPublish"><span id="btnPublishMessage">留言</span></div>
+            </div>
+            <ul id="messagesUl">
+            </ul>
+            <div class="messageEnd">没有更多留言了ʕ•̀ ω •́ʔ</div>
+        </div>
+        <div class="main_register">
+            <form id="registInfo" action="regist.do">
+                <ul class="form_list">
+                    <li>
+                        <span>用户名<i></i></span>:
+                        <input type="text" autocomplete="username" name="username" id="username"/>
+                        <img id="username_img" />
+                        <span id="username_msg"></span>
+                    </li>
+                    <li>
+                        注：由字母数字下划线组成且开头必须是字母，长度3到16位，必填
+                    </li>
+                    <li>
+                        <span>昵称<i></i></span>:
+                        <input type="text" autocomplete="username" name="nickname" id="nickname"/>
+                        <img id="nickname_img" />
+                        <span id="nickname_msg"></span>
+                    </li>
+                    <li>
+                        注：长度不能超过16位， 必填
+                    </li>
+                    <li>
+                        <span>密码<i></i></span>:
+                        <input type="password" autocomplete="new-password" name="password"/>
+                        <img id="password_img" />
+                        <span id="password_msg"></span>
+                    </li>
+                    <li>
+                        注：字母和数字组成，不能超过16位，必填
+                    </li>
+                    <li>
+                        <span>确认密码<i></i></span>:
+                        <input type="password" autocomplete="new-password" name="repwd"/>
+                        <img id="repwd_img" />
+                        <span id="repwd_msg"></span>
+                    </li>
+                    <li>
+                        注：字母和数字组成，不能超过16位，必填
+                    </li>
+                    <li>
+                        <span>出生日期<i></i></span>:
+                        <input type="text" name="borndate"/>
+                        <img id="borndate_img" />
+                        <span id="borndate_msg"></span>
+                    </li>
+                    <li>
+                        例：2020-02-20
+                    </li>
+                    <li>
+                        <span>邮箱<i></i></span>:
+                        <input type="text" name="email"/>
+                        <img id="email_img" />
+                        <span id="email_msg"></span>
+                    </li>
+                    <li>
+                        注：需为邮箱格式
+                    </li>
+                    <li>
+                        <span>手机号码<i></i></span>:
+                        <input type="text" name="phone"/>
+                        <img id="phone_img" />
+                        <span id="phone_msg"></span>
+                    </li>
+                    <li>
+                        注：十一位数字
+                    </li>
+                    <li>
+<!--                        <input type="button" name="retlogin" value="返回登录" class="an"/><span style="margin:0 20px;">&nbsp;</span>-->
+                        <span id="btnRegister">注册</span>
+<!--                        <input type="button" id="regist" name="zhuce" value="注册" class="an"/>-->
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="login">
+            <form id="loginInfo" action="login.do" method="post">
+                <div class="bq">
+                    <span>用 户 名：<i></i></span>
+                    <input type="text" name="loginUsername" style="width:130px;" /><br/>
+                </div>
+                <div class="bq">
+                    <span >密 码：<i></i></span>
+                    <input type="password" name="loginPassword" style="width:130px;" /><br/>
+                </div>
+<!--                <input type="button" id="login" name="login" value="登录" style="margin:15px 50px 0px 90px;" />-->
+                <span id="btnLogin">登录</span>
+                <span id="btnForgetPwd">忘记密码</span>
+            </form>
+        </div>
+        <div class="messagerInfo">
+            <form id="modifyInfo" action="regist.do">
+                <ul class="form_list">
+                    <li>
+                        <span>用户名<i></i></span>:
+                        <label></label>
+                    </li>
+                    <li style="display: none"></li>
+                    <li>
+                        <span>昵称<i></i></span>:
+                        <input type="text" autocomplete="username" name="nickname" id="modifyNickname"/>
+                        <img id="modifyNickname_img" />
+                        <span id="modifyNickname_msg"></span>
+                    </li>
+                    <li style="display: none"></li>
+                    <li>
+                        <span>出生日期<i></i></span>:
+                        <input type="text" name="borndate"/>
+                        <img id="modifyBorndate_img" />
+                        <span id="modifyBorndate_msg"></span>
+                    </li>
+                    <li style="display: none"></li>
+                    <li>
+                        <span>邮箱<i></i></span>:
+                        <input type="text" name="email"/>
+                        <img id="modifyEmail_img" />
+                        <span id="modifyEmail_msg"></span>
+                    </li>
+                    <li style="display: none"></li>
+                    <li>
+                        <span>手机号码<i></i></span>:
+                        <input type="text" name="phone"/>
+                        <img id="modifyPhone_img" />
+                        <span id="modifyPhone_msg"></span>
+                    </li>
+                    <li style="display: none"></li>
+                    <li>
+                        <!--                        <input type="button" name="retlogin" value="返回登录" class="an"/><span style="margin:0 20px;">&nbsp;</span>-->
+                        <span id="btnModifyInfo">修改</span>
+                        <!--                        <input type="button" id="regist" name="zhuce" value="注册" class="an"/>-->
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="modifyPass">
+            <form id="modifyPassword" action="regist.do">
+                <ul class="form_list">
+                    <li>
+                        <span>原始密码<i></i></span>:
+                        <input type="password" autocomplete="new-password" name="originalPass"/>
+                        <img id="modifyPassword_img" />
+                        <span id="modifyPassword_msg"></span>
+                    </li>
+                    <li style="display: none"></li>
+                    <li>
+                        <span>新密码<i></i></span>:
+                        <input type="password" autocomplete="new-password" name="password"/>
+                        <img id="newPassword_img" />
+                        <span id="newPassword_msg"></span>
+                    </li>
+                    <li style="display: none"></li>
+                    <li>
+                        <span>确认新密码<i></i></span>:
+                        <input type="password" autocomplete="new-password" name="repwd"/>
+                        <img id="newRepwd_img" />
+                        <span id="newRepwd_msg"></span>
+                    </li>
+                    <li style="display: none"></li>
+                    <li>
+                        <!--                        <input type="button" name="retlogin" value="返回登录" class="an"/><span style="margin:0 20px;">&nbsp;</span>-->
+                        <span id="btnModifyPass">修改</span>
+                        <!--                        <input type="button" id="regist" name="zhuce" value="注册" class="an"/>-->
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+
+    <div class="div_bottom">
+        <div class="bottom">
+            <ul>
+                <li id="showhome2">主页</li>
+                <li>|</li>
+                <li>关于我们</li>
+<!--                <br/><span>版权所有：苏振</span>-->
+            </ul>
+        </div>
+    </div>
+
+<script type="text/javascript" src="static/js/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="static/js/jquery.endless-scroll-1.3.js"></script>
+<script type="text/javascript" src="static/js/toolFunctions.js"></script>
+<script type="text/javascript" src="static/js/index.js"></script>
+<!--<script type="text/javascript" src="static/js/bar_bottom.js"></script>-->
+
+</body>
+</html>

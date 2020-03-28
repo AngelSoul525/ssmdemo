@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xyz.angelsoul.ssmdemo.dao.MessagerDao">
+
+    <!-- saveMessagerInfo(Messager messager) -->
+    <insert id="saveMessagerInfo" parameterType="xyz.angelsoul.ssmdemo.model.Messager">
+        insert into userinfo
+            (username, nickname, userpassword, borntime, createtime, email, mobilephone)
+        VALUES
+            (#{username}, #{nickname}, #{password}, #{borndate}, #{createTime}, #{email}, #{phone})
+    </insert>
+
+    <!-- updateMessagerInfo(Messager messager) -->
+    <update id="updateMessagerInfo" parameterType="map">
+        update userinfo
+        set
+        <trim suffixOverrides="," prefixOverrides=",">
+            <if test="password != null">
+                userpassword = #{password},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="borndate != null">
+                borntime = #{borndate},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="phone != null">
+                mobilephone = #{phone},
+            </if>
+        </trim>
+        where username = #{username}
+    </update>
+
+    <!-- selectMessagerByUsername(String username) -->
+    <select id="selectMessagerByUsername" parameterType="String" resultType="xyz.angelsoul.ssmdemo.model.Messager">
+        select username username, nickname nickname, userpassword password, borntime borndate, createtime createtime,
+                deletetime deletetime, email email, mobilephone phone, isdelete isdelete
+        from userinfo where username = #{username}
+    </select>
+
+    <!-- selectMessagerByNickname(String nickname) -->
+    <select id="selectMessagerByNickname" parameterType="String" resultType="xyz.angelsoul.ssmdemo.model.Messager">
+        select username username, nickname nickname, userpassword password, borntime borndate, createtime createtime,
+                deletetime deletetime, email email, mobilephone phone, isdelete isdelete
+        from userinfo where nickname = #{nickname}
+    </select>
+
+</mapper>

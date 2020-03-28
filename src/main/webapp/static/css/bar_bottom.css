@@ -1,0 +1,121 @@
+@charset "UTF-8";
+/****************************bar**************************/
+.div_bar {
+    height: 9%;
+    /*border: aqua solid 1px;*/
+}
+
+.bar {
+    background-color:#484a4a;
+    width:100%;//99.2
+    height:100%;
+    padding-top:5px;
+    padding-bottom:13px;
+    /*padding-left:15px;*/
+    color:white;
+    font-size:55px;
+    font-family:隶书, sans-serif;
+    font-style:italic;
+    border-bottom:2px solid red;
+    /*border: aqua solid 1px;*/
+}
+.bar a{
+    font-size:20px;
+    font-style: normal;
+    color:white;
+    text-decoration:none;
+}
+/*.bar span{*/
+/*    cursor:pointer;*/
+/*    font-size:20px;*/
+/*    font-style:normal;*/
+/*}*/
+
+.barLogo {
+    margin-left: 15px;
+}
+
+.bar_link {
+    text-align: right;
+    position: absolute;
+    right: 80px;
+    top: 0;
+    float: right;
+}
+
+.bar_link ul {
+    display: inline-block;
+    list-style: none;
+    /*border: blueviolet solid 1px;*/
+}
+
+.bar_link>ul>li {
+    display: none;
+    min-width: 100px;
+    text-align: center;
+    float: left;
+    margin: 0 4px;
+    cursor:pointer;
+    font-size:22px;
+    font-style:normal;
+    /*border: blue solid 1px;*/
+}
+
+.bar_link>ul>li:first-child {
+    padding-right: 30px;
+    text-align: right;
+    display: block;
+}
+
+#messagerOperate {
+    display: none;
+    width: 100px;
+    margin-top: 3px;
+    padding: 0;
+    /*border: chartreuse solid 1px;*/
+}
+
+#messagerOperate>li {
+    margin: 0;
+    background-color: #666464;
+    /*border: chocolate solid 1px;*/
+}
+
+/***************************bottom**********************/
+.div_bottom {
+    /*border: 1px solid white;*/
+    height: 4.3%;
+}
+
+.bottom{
+    background-color:#484a4a;
+    width:100%;
+    height: 100%;
+    color:white;
+    font-size:13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    /*position:absolute;*/
+    /*bottom:0;*/
+    /*right:0;*/
+    padding:1px 0;
+    border-top:2px solid red;
+    /*border: 1px solid red;*/
+}
+
+.bottom ul {
+    display: inline-block;
+    list-style: none;
+    /*border: blueviolet solid 1px;*/
+}
+
+.bottom ul li {
+    text-align: center;
+    float: left;
+    margin: 0 4px;
+    cursor:pointer;
+    /*font-size:15px;*/
+    font-style:normal;
+}
