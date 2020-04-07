@@ -4,6 +4,7 @@ let PAGE_SHOW = {
     LOGIN: 2,
     MODIFY_INFO: 3,
     MODIFY_PASS: 4,
+    ABOUT_US: 5,
 };
 
 let C = 10;//滚动条距离底部的距离
@@ -30,10 +31,11 @@ let messagerInfoCache;
 $(function () {
     let showRegister = $("#showRegister");
     let showHome = $("#showHome");
-    let showHome2 = $("#showHome2");
+    let showHome2 = $("#showhome2");
     let showLogin = $("#showLogin");
     let showModifyInfo = $("#showMessagerInfo");
     let showModifyPass = $("#showModifyPass");
+    let showAboutUs = $("#showaboutus");
     let btnToTop = $("#backToTop");
 
     let showMessagerOperate = $("#showNickname");
@@ -62,10 +64,11 @@ $(function () {
 
     showRegister.click("register", showDivReference);
     showHome.click("home", showDivReference);
-    showHome2.click("home", showDivReference);
+    showHome2.click("home2", showDivReference);
     showLogin.click("login", showDivReference);
     showModifyInfo.click("messagerInfo", showDivReference);
     showModifyPass.click("modifyPassword", showDivReference);
+    showAboutUs.click("aboutus", showDivReference);
 
     btnToTop.click(backToTop);
 
@@ -176,6 +179,7 @@ function showDivReference(event) {
     let divMessagerInfo = $(".messagerInfo");
     let divModifyPass = $(".modifyPass");
     let divNewMess = $(".newMessaage");
+    let divAboutUs = $(".aboutus");
 
     console.log(showDivReference.name);
     console.log(event.data);
@@ -183,12 +187,14 @@ function showDivReference(event) {
     divNewMess.hide();
     initFlag();
     switch (event.data) {
+        case "home2":
         case "home":
             divHome.show();
             divRegister.hide();
             divLogin.hide();
             divMessagerInfo.hide();
             divModifyPass.hide();
+            divAboutUs.hide();
 
             let username = getCookie("username");
             if("" !== username && null !== username) {
@@ -204,6 +210,7 @@ function showDivReference(event) {
             divLogin.hide();
             divMessagerInfo.hide();
             divModifyPass.hide();
+            divAboutUs.hide();
             flagShowPage = PAGE_SHOW.REGISTER;
         break;
         case "login":
@@ -212,6 +219,7 @@ function showDivReference(event) {
             divLogin.show();
             divMessagerInfo.hide();
             divModifyPass.hide();
+            divAboutUs.hide();
             flagShowPage = PAGE_SHOW.LOGIN;
         break;
         case "messagerInfo":
@@ -220,6 +228,7 @@ function showDivReference(event) {
             divLogin.hide();
             divMessagerInfo.show();
             divModifyPass.hide();
+            divAboutUs.hide();
             showMessagerInfo();
             flagShowPage = PAGE_SHOW.MODIFY_INFO;
             break;
@@ -229,7 +238,17 @@ function showDivReference(event) {
             divLogin.hide();
             divMessagerInfo.hide();
             divModifyPass.show();
+            divAboutUs.hide();
             flagShowPage = PAGE_SHOW.MODIFY_PASS;
+            break;
+        case "aboutus":
+            divHome.hide();
+            divRegister.hide();
+            divLogin.hide();
+            divMessagerInfo.hide();
+            divModifyPass.hide();
+            divAboutUs.show();
+            flagShowPage = PAGE_SHOW.ABOUT_US;
             break;
 
         default:

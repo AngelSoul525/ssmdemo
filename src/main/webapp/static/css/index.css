@@ -370,3 +370,11 @@ body{
     cursor: pointer;
     /*border: aqua solid 1px;*/
 }
+
+/**********************************about us*********************************************/
+.aboutus {
+    background-color: silver;
+    margin-top: 20px;
+    padding: 20px 0;
+    display: none;
+}
