@@ -180,6 +180,7 @@ function showDivReference(event) {
     let divModifyPass = $(".modifyPass");
     let divNewMess = $(".newMessaage");
     let divAboutUs = $(".aboutus");
+    let divMessageEnd = $(".messageEnd");
 
     console.log(showDivReference.name);
     console.log(event.data);
@@ -195,6 +196,7 @@ function showDivReference(event) {
             divMessagerInfo.hide();
             divModifyPass.hide();
             divAboutUs.hide();
+            divMessageEnd.hide();
 
             let username = getCookie("username");
             if("" !== username && null !== username) {
