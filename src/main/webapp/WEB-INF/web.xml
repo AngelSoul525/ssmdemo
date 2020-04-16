@@ -50,6 +50,16 @@
         <!-- 可配置为 .do 形式 -->
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>selfCheck</servlet-name>
+        <servlet-class>xyz.angelsoul.ssmdemo.service.SelfCheckServlet</servlet-class>
+        <load-on-startup>9</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>selfCheck</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
     
     <filter>
         <filter-name>AclFilter</filter-name>

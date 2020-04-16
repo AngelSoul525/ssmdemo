@@ -8,20 +8,25 @@ public interface MessagerDao {
     /**
      * save messager information
      */
-    public int saveMessagerInfo(Messager messager);
+    int saveMessagerInfo(Messager messager);
 
     /**
      * update messager information
      */
-    public int updateMessagerInfo(Messager messager);
+    int updateMessagerInfo(Messager messager);
 
     /**
      * select messager information by username
      */
-    public Messager selectMessagerByUsername(String username);
+    Messager selectMessagerByUsername(String username);
 
     /**
      * select messager information by nickname
      */
-    public Messager selectMessagerByNickname(String nickname);
+    Messager selectMessagerByNickname(String nickname);
+
+    /**
+     * select a messager for keeping database connection running
+     */
+    Messager selectMessager();
 }

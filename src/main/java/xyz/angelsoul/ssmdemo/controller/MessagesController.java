@@ -55,7 +55,7 @@ public class MessagesController extends AbstractController {
 
         List<Map<String, Object>> res = messageService.queryMessages(lastMessageID);
         if(res != null) {
-            System.out.println(lastMessageID + " " + res);
+            System.out.println("[queryMessage] " + lastMessageID + " " + res);
             return new JsonResult<Object>(res);
         }
 

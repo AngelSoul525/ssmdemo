@@ -48,4 +48,11 @@
         from userinfo where nickname = #{nickname}
     </select>
 
+    <!-- selectMessager() -->
+    <select id="selectMessager" resultType="xyz.angelsoul.ssmdemo.model.Messager">
+        select username username, nickname nickname, userpassword password, borntime borndate, createtime createtime,
+                deletetime deletetime, email email, mobilephone phone, isdelete isdelete
+        from userinfo
+        limit 1
+    </select>
 </mapper>

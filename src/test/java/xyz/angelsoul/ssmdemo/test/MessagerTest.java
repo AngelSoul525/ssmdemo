@@ -72,4 +72,11 @@ public class MessagerTest {
 
 //        System.out.println(res);
     }
+    
+    @Test
+    public void testSelectMessager() {
+        Messager messager = messagerDao.selectMessager();
+        
+        System.out.println(messager);
+    }
 }
