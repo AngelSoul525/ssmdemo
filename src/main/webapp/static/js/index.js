@@ -189,6 +189,7 @@ function showDivReference(event) {
     initFlag();
     switch (event.data) {
         case "home2":
+            backToTop();
         case "home":
             divHome.show();
             divRegister.hide();
@@ -197,6 +198,8 @@ function showDivReference(event) {
             divModifyPass.hide();
             divAboutUs.hide();
             divMessageEnd.hide();
+            let divLoading = $(".loading");
+            divLoading.show();
 
             let username = getCookie("username");
             if("" !== username && null !== username) {
@@ -338,6 +341,8 @@ function showMessageList(messages, lastMessageID) {
 
     console.log(messages);
 
+    let divLoading = $(".loading");
+
     let ul = lastMessageID === 0 ? $("#messagesUl").empty() : $("#messagesUl");
 
     for(let i = 0; i < messages.length; i ++) {
@@ -350,6 +355,8 @@ function showMessageList(messages, lastMessageID) {
         li = $(li).data('messageID', message.messageID);
         ul.append(li);
     }
+
+    divLoading.slideUp(1000);
 }
 
 /***************************用户操作相关*************************/
