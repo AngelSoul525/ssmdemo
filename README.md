@@ -3,9 +3,9 @@ record daily life
 
 ## develop environment
 IDEA<br/>
-JDK 1.8
-Tomcat 9.0.26
-MySql 8.0
+JDK 1.8<br/>
+Tomcat 9.0.26<br/>
+MySql 8.0<br/>
 
 # Version record
 ## V1.0.0
