@@ -9,7 +9,8 @@ MySql 8.0
 
 # Version record
 ## V1.0.0
-original version
+
+### original version
 
 ## V1.0.1
 ### fix some background color problem
@@ -26,6 +27,6 @@ original version
 
 ## V1.0.3
 
-### 1.fix database connection would time-outs after not operating for 8 hours
+### 1. fix database connection would time-outs after not operating for 8 hours
 
-### 2.add loading animation
+### 2. add loading animation
