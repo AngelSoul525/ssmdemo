@@ -382,6 +382,10 @@ function showMessageList(messages, lastMessageID) {
         ul.append(li);
     }
 
+    if(messages.length < 15) {
+        $(".messageEnd").show();
+    }
+
     divLoading.slideUp(1000);
 }
 
