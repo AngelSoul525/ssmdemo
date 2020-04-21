@@ -26,5 +26,5 @@ public interface MessageService {
     /**
      * paging query messages by username
      */
-    public List<Map<String, Object>> queryMessagesByUsername(String username, int pageNum);
+    public List<Map<String, Object>> queryMessagesByUsername(String username, String lastMessageID);
 }

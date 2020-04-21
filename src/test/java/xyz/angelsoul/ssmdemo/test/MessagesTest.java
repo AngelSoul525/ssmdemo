@@ -9,6 +9,7 @@ import xyz.angelsoul.ssmdemo.dao.MessagerDao;
 import xyz.angelsoul.ssmdemo.dao.MessagesDao;
 import xyz.angelsoul.ssmdemo.model.Message;
 import xyz.angelsoul.ssmdemo.model.Messager;
+import xyz.angelsoul.ssmdemo.service.MessageService;
 import xyz.angelsoul.ssmdemo.service.MessagerOperateService;
 import xyz.angelsoul.ssmdemo.utils.CONSTANTS;
 
@@ -20,13 +21,13 @@ import java.util.Map;
 public class MessagesTest {
     private ApplicationContext ac;
     private MessagesDao messagesDao;
-//    private MessagesOperateService messagesOperateService;
+    private MessageService messageService;
 
     @Before
     public void init() {
         ac = new ClassPathXmlApplicationContext("spring-mvc.xml", "spring-mybatis.xml");
         messagesDao = ac.getBean("messagesDao", MessagesDao.class);
-//        messagesOperateService = ac.getBean("messagesOperateService", MessagesOperateService.class);
+        messageService = ac.getBean("messageService", MessageService.class);
     }
 
     @Test
@@ -45,11 +46,35 @@ public class MessagesTest {
         para.put("lastMessageID", 0);
         para.put("messagesNum", CONSTANTS.MESSAGES_PER_PAGE);
 
-        List<Map<String, Object>> res = messagesDao.selectMessages(para);
+        List<Map<String, Object>> res = messageService.queryMessages("0");
+//                messagesDao.selectMessages(para);
 
-        System.out.println(res.get(0).get("messageID"));
+//        System.out.println(res.get(0).get("messageID"));
 
-//        System.out.println(res);
+        System.out.println(res);
+    }
+
+    @Test
+    public void testSelectMessagesByService() {
+        List<Map<String, Object>> res = messageService.queryMessagesByUsername("wangwu", "0");
+        
+        System.out.println(res);
+    }
+
+    @Test
+    public void testSelectMessagesByUsername() {
+        Message message = new Message();
+        String username = "zhangsan";
+        Map<String, Object> para = new HashMap<>();
+        para.put("lastMessageID", 0);
+        para.put("username", username);
+        para.put("messagesNum", CONSTANTS.MESSAGES_PER_PAGE);
+
+        List<Map<String, Object>> res = messagesDao.selectMessagesByUsername(para);
+
+//        System.out.println(res.get(0).get("messageID"));
+
+        System.out.println(res);
     }
 
 

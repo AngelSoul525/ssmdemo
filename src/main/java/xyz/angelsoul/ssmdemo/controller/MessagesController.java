@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xyz.angelsoul.ssmdemo.model.Message;
 import xyz.angelsoul.ssmdemo.service.MessageService;
+import xyz.angelsoul.ssmdemo.utils.CONSTANTS;
 import xyz.angelsoul.ssmdemo.utils.JsonResult;
 
 import javax.annotation.Resource;
@@ -48,12 +49,18 @@ public class MessagesController extends AbstractController {
      */
     @RequestMapping("/queryMessage")
     @ResponseBody
-    public JsonResult<Object> queryMessage(String lastMessageID) {
+    public JsonResult<Object> queryMessage(String username, String lastMessageID) {
         if(lastMessageID == null || lastMessageID.equals("")) {
             throw new RuntimeException("服务器异常，请重试");
         }
+        List<Map<String, Object>> res;
+        System.out.println("queryMessage " + username + " " + lastMessageID);
 
-        List<Map<String, Object>> res = messageService.queryMessages(lastMessageID);
+        if(username.equals(CONSTANTS.HOME_REQUEST_USERNAME)) {
+            res = messageService.queryMessages(lastMessageID);
+        } else {
+            res = messageService.queryMessagesByUsername(username, lastMessageID);
+        }
         if(res != null) {
             System.out.println("[queryMessage] " + lastMessageID + " " + res);
             return new JsonResult<Object>(res);

@@ -5,6 +5,7 @@ let PAGE_SHOW = {
     MODIFY_INFO: 3,
     MODIFY_PASS: 4,
     ABOUT_US: 5,
+    MY_MESSAGES: 6,
 };
 
 let C = 10;//滚动条距离底部的距离
@@ -32,6 +33,7 @@ $(function () {
     let showRegister = $("#showRegister");
     let showHome = $("#showHome");
     let showHome2 = $("#showhome2");
+    let showMyMessages = $("#showMyMessages");
     let showLogin = $("#showLogin");
     let showModifyInfo = $("#showMessagerInfo");
     let showModifyPass = $("#showModifyPass");
@@ -65,6 +67,7 @@ $(function () {
     showRegister.click("register", showDivReference);
     showHome.click("home", showDivReference);
     showHome2.click("home2", showDivReference);
+    showMyMessages.click("myMessages", showDivReference);
     showLogin.click("login", showDivReference);
     showModifyInfo.click("messagerInfo", showDivReference);
     showModifyPass.click("modifyPassword", showDivReference);
@@ -181,6 +184,7 @@ function showDivReference(event) {
     let divNewMess = $(".newMessaage");
     let divAboutUs = $(".aboutus");
     let divMessageEnd = $(".messageEnd");
+    let divLoading = $(".loading");
 
     console.log(showDivReference.name);
     console.log(event.data);
@@ -198,7 +202,6 @@ function showDivReference(event) {
             divModifyPass.hide();
             divAboutUs.hide();
             divMessageEnd.hide();
-            let divLoading = $(".loading");
             divLoading.show();
 
             let username = getCookie("username");
@@ -206,8 +209,21 @@ function showDivReference(event) {
                 divNewMess.show();
             }
 
-            contentInit(0);
             flagShowPage = PAGE_SHOW.HOME;
+            contentInit(0);
+        break;
+        case "myMessages":
+            divHome.show();
+            divRegister.hide();
+            divLogin.hide();
+            divMessagerInfo.hide();
+            divModifyPass.hide();
+            divAboutUs.hide();
+            divMessageEnd.hide();
+            divLoading.show();
+
+            flagShowPage = PAGE_SHOW.MY_MESSAGES;
+            contentInit(0);
         break;
         case "register":
             divHome.hide();
@@ -216,6 +232,7 @@ function showDivReference(event) {
             divMessagerInfo.hide();
             divModifyPass.hide();
             divAboutUs.hide();
+
             flagShowPage = PAGE_SHOW.REGISTER;
         break;
         case "login":
@@ -225,6 +242,7 @@ function showDivReference(event) {
             divMessagerInfo.hide();
             divModifyPass.hide();
             divAboutUs.hide();
+
             flagShowPage = PAGE_SHOW.LOGIN;
         break;
         case "messagerInfo":
@@ -234,8 +252,9 @@ function showDivReference(event) {
             divMessagerInfo.show();
             divModifyPass.hide();
             divAboutUs.hide();
-            showMessagerInfo();
+
             flagShowPage = PAGE_SHOW.MODIFY_INFO;
+            showMessagerInfo();
             break;
         case "modifyPassword":
             divHome.hide();
@@ -244,6 +263,7 @@ function showDivReference(event) {
             divMessagerInfo.hide();
             divModifyPass.show();
             divAboutUs.hide();
+
             flagShowPage = PAGE_SHOW.MODIFY_PASS;
             break;
         case "aboutus":
@@ -253,6 +273,7 @@ function showDivReference(event) {
             divMessagerInfo.hide();
             divModifyPass.hide();
             divAboutUs.show();
+
             flagShowPage = PAGE_SHOW.ABOUT_US;
             break;
 
@@ -267,27 +288,30 @@ function showDivReference(event) {
 }
 /*****************************留言显示相关***********************/
 function loadflushEvent() {
-    // $(document).endlessScroll({
-    //
-    //     bottomPixels: 450,
-    //
-    //     fireOnce: true,
-    //
-    //     fireDelay: 5000,
-    //
-    //     callback: function(p){
-    //
-    //         let last_message = $("#messagesUl li:last");
-    //
-    //         contentInit(last_message.data("messageID"));
-    //
-    //         // last_message.after(last_img.prev().prev().prev().prev().prev().prev().clone());
-    //
-    //     }
-    //
-    // });
-    $(window).scroll(function() {
-        if(flagShowPage !== PAGE_SHOW.HOME) {
+    $(document).endlessScroll({
+        fireOnce: true,
+        fireDelay: 2000,
+        loader: "<div class='loading'><div>",
+        callback: function (p) {
+            if(flagShowPage !== PAGE_SHOW.HOME && flagShowPage !== PAGE_SHOW.MY_MESSAGES) {
+                return ;
+            }
+
+            //do something
+            let last_message = $("#messagesUl li:last");
+            let res = contentInit(last_message.data("messageID"));
+
+            let divMsg = $(".messageEnd");
+            if(res === null) {
+                divMsg.show();
+            } else {
+                divMsg.hide();
+            }
+        }
+    });
+
+    /*$(window).scroll(function() {
+        if(flagShowPage !== PAGE_SHOW.HOME && flagShowPage !== PAGE_SHOW.MY_MESSAGES) {
             return ;
         }
 
@@ -300,19 +324,21 @@ function loadflushEvent() {
 
             let divMsg = $(".messageEnd");
             if(res === null) {
-                divMsg.show().fadeIn(3000);
+                divMsg.show();
             } else {
-                divMsg.hide().fadeTo(3000);
+                divMsg.hide();
             }
         }
-    });
+    });*/
 }
 
 function contentInit(lastMessageID) {
     let url = "message/queryMessage.do";
-    let data = {lastMessageID: lastMessageID};
+    let username = flagShowPage === PAGE_SHOW.HOME ? "HM" : getCookie("username");
+    let data = {username: username, lastMessageID: lastMessageID};
 
     console.log(contentInit.name);
+    console.log(data);
     $.getJSON(url, data, function (result) {
         if(result.state === 0) {
             if(result.data === null) {
@@ -410,7 +436,7 @@ function userLogin() {
             console.log(result.data);
             setCookie("username", result.data.username, 30);
             setCookie("nickname", result.data.nickname, 30);
-            alert("登录成功");
+            // alert("登录成功");
             window.location.reload();
         } else {
             alert(result.message);
@@ -929,7 +955,7 @@ function requestPublishMessage() {
 
     $.getJSON(url, data, function (result) {
         if(result.state === 0) {
-             alert("留言成功");
+             // alert("留言成功");
              window.location.reload();
         } else {
             alert(result.message);

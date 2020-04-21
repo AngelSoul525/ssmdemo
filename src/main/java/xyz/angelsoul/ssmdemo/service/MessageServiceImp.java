@@ -47,14 +47,21 @@ public class MessageServiceImp implements MessageService {
         Map<String, Object> para = new HashMap<String, Object>();
         para.put("lastMessageID", lastMessageID);
         para.put("messagesNum", CONSTANTS.MESSAGES_PER_PAGE);
+        
+        System.out.println("[queryMessages] " + para);
 
-        List<Map<String, Object>> res = messagesDao.selectMessages(para);
-        return res;
+        return messagesDao.selectMessages(para);
     }
 
     @Override
-    public List<Map<String, Object>> queryMessagesByUsername(String username, int pageNum)
-    {
-        return null;
+    public List<Map<String, Object>> queryMessagesByUsername(String username, String lastMessageID) {
+        Map<String, Object> para = new HashMap<String, Object>();
+        para.put("lastMessageID", lastMessageID);
+        para.put("username", username);
+        para.put("messagesNum", CONSTANTS.MESSAGES_PER_PAGE);
+
+        System.out.println("[queryMessagesByUsername] " + para);
+
+        return messagesDao.selectMessagesByUsername(para);
     }
 }

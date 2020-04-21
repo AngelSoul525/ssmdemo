@@ -24,8 +24,8 @@ public interface MessagesDao {
      */
     public List<Map<String, Object>> selectMessages(Map<String, Object> para);
 
-//    /**
-//     * select messages information by username
-//     */
-//    public List<Map<String, Message>> selectMessagesByUsername(int startNum, int messagesNum, String username);
+    /**
+     * paging select messages information by username
+     */
+    public List<Map<String, Object>> selectMessagesByUsername(Map<String, Object> para);
 }
