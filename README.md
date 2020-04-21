@@ -30,3 +30,7 @@ MySql 8.0<br/>
 ### 1. fix database connection would time-outs after not operating for 8 hours
 
 ### 2. add loading animation
+
+## V1.0.4
+
+### 1. fix query 10 messages a time to query 15 messages a time
