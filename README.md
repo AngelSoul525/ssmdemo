@@ -34,3 +34,11 @@ MySql 8.0<br/>
 ## V1.0.4
 
 ### 1. fix query 10 messages a time to query 15 messages a time
+
+## V1.0.5
+
+### 1.use endlessScroll function to reduce the number of query messages
+
+### 2.remove the alert dialog when login success and publish message success
+
+### 3.add query my published messages function
