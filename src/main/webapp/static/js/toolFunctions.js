@@ -50,3 +50,40 @@ function unixToDate(unixTimeTem, isFull, timeZoneTem) {
     }
     return ymdhis;
 }
+
+
+function customAlert(alertText) {
+    $.alert({
+        title: 'Alert',
+        content: alertText,
+        useBootstrap: false,
+        boxWidth: '300px',
+        draggable: false,
+    });
+}
+
+function operateConfirm(text, okFunction) {
+    $.confirm({
+        title: '确认',
+        content: text,
+        type: 'red',
+        useBootstrap: false,
+        boxWidth: '300px',
+        draggable: false,
+        // columnClass: 'small',
+        icon: 'glyphicon glyphicon-heart',
+        buttons: {
+            ok: {
+                text: '确认',
+                // btnClass: 'btn-primary',
+                action: function () {
+                    okFunction();
+                }
+            },
+            cancel: {
+                text: '取消',
+                // btnClass: 'btn-primary'
+            }
+        }
+    });
+}

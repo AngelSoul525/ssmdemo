@@ -1,5 +1,6 @@
 package xyz.angelsoul.ssmdemo.controller;
 
+import com.alibaba.fastjson.JSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +12,8 @@ import xyz.angelsoul.ssmdemo.utils.JsonResult;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+
+import static xyz.angelsoul.ssmdemo.utils.CONSTANTS.SUCCESS_DB_OPERATE;
 
 @Controller
 @RequestMapping("message")
@@ -70,17 +73,25 @@ public class MessagesController extends AbstractController {
     }
 
     /**
-     * query messages by username
-     * @param username query messages by username
-     * @return return response body
+     * delete message
+     * @param messageID the id want to delete
+     * @return if delete success
      */
-    @RequestMapping("/queryMessageByUsername")
+    @RequestMapping("/deleteMessage")
     @ResponseBody
-    public JsonResult<Object> queryMessageByUsername(String username) {
-        if(username == null) {
-            throw new RuntimeException("用户不存在");
+    public JsonResult<Object> deleteMessage(int messageID) {
+        if(messageID == 0) {
+            throw new RuntimeException("服务器繁忙，请稍后重试");
         }
 
-        return null;
+        System.out.println("deleteMessage " + messageID);
+        int result = messageService.deleteMessage(messageID);
+
+        if(result == SUCCESS_DB_OPERATE) {
+            System.out.println("deleteMessage " + result);
+            return new JsonResult<Object>(result);
+        }
+
+        return new JsonResult<>(new RuntimeException("删除失败，请稍后重试"));
     }
 }

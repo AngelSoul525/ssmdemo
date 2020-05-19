@@ -6,6 +6,7 @@ import xyz.angelsoul.ssmdemo.model.Message;
 import xyz.angelsoul.ssmdemo.utils.CONSTANTS;
 
 import javax.annotation.Resource;
+import javax.management.remote.JMXServerErrorException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,5 +64,16 @@ public class MessageServiceImp implements MessageService {
         System.out.println("[queryMessagesByUsername] " + para);
 
         return messagesDao.selectMessagesByUsername(para);
+    }
+
+    @Override
+    public int deleteMessage(int messageID) {
+        Message message = new Message();
+
+        message.setMessageID(messageID);
+        message.setDeleteTime(new Date().getTime());
+        message.setIsDelete(CONSTANTS.STATUS_DELETE);
+
+        return messagesDao.updateMessage(message);
     }
 }

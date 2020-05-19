@@ -3,6 +3,7 @@ package xyz.angelsoul.ssmdemo.service;
 import org.springframework.stereotype.Service;
 import xyz.angelsoul.ssmdemo.dao.MessagerDao;
 import xyz.angelsoul.ssmdemo.model.Messager;
+import xyz.angelsoul.ssmdemo.utils.CONSTANTS;
 import xyz.angelsoul.ssmdemo.utils.RETURN_CODE;
 
 import javax.annotation.Resource;
@@ -55,7 +56,7 @@ public class MessagerOperateServiceImp implements MessagerOperateService {
             throw new RuntimeException("用户不存在");
         }
         int res = messagerDao.updateMessagerInfo(messager);
-        if(res == 1) {
+        if(res == CONSTANTS.SUCCESS_DB_OPERATE) {
             return messager;
         } else {
             return null;
@@ -81,12 +82,7 @@ public class MessagerOperateServiceImp implements MessagerOperateService {
         messager.setPassword(newPassword);
         messager.setUsername(username);
 
-        int res = messagerDao.updateMessagerInfo(messager);
-        if(res != 1) {
-            return -1;
-        }
-
-        return 0;
+        return messagerDao.updateMessagerInfo(messager);
     }
 
     @Override

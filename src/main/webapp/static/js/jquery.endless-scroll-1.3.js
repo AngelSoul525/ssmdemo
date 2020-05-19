@@ -106,7 +106,7 @@
 							$("div#endless_scroll_data").hide().fadeIn();
 							$("div#endless_scroll_data").removeAttr("id");
 
-							let args = new Array();
+							let args = [];
 							args[0] = fireSequence;
 							options.callback.apply(this, args);
 

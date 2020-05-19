@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xyz.angelsoul.ssmdemo.model.Messager;
 import xyz.angelsoul.ssmdemo.service.MessagerOperateService;
+import xyz.angelsoul.ssmdemo.utils.CONSTANTS;
 import xyz.angelsoul.ssmdemo.utils.JsonResult;
 import xyz.angelsoul.ssmdemo.utils.RETURN_CODE;
 
@@ -136,13 +137,11 @@ public class UserController extends AbstractController {
     public JsonResult<Object> requestModifyPassword(String username, String originalPassword, String newPassword) {
         System.out.println("[requestModifyMessagerInfo] " + username + " " + originalPassword + " " + newPassword);
         int res = messagerOperateService.requestModifyPassword(username, originalPassword, newPassword);
-        if(res == -1) {
-            return new JsonResult<>(new RuntimeException("服务器较忙，请稍后再试"));
-        }
-        if(res == 0) {
+
+        if(res == CONSTANTS.SUCCESS_DB_OPERATE) {
             return new JsonResult<Object>(res);
         }
 
-        return new JsonResult<>(new RuntimeException("未知错误！"));
+        return new JsonResult<>(new RuntimeException("服务器较忙，请稍后再试"));
     }
 }

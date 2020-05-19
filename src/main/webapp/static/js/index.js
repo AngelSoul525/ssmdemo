@@ -64,16 +64,16 @@ $(function () {
     contentInit(0);
     loadflushEvent();
 
-    showRegister.click("register", showDivReference);
-    showHome.click("home", showDivReference);
-    showHome2.click("home2", showDivReference);
-    showMyMessages.click("myMessages", showDivReference);
-    showLogin.click("login", showDivReference);
-    showModifyInfo.click("messagerInfo", showDivReference);
-    showModifyPass.click("modifyPassword", showDivReference);
-    showAboutUs.click("aboutus", showDivReference);
+    showRegister.unbind("click").click("register", showDivReference);
+    showHome.unbind("click").click("home", showDivReference);
+    showHome2.unbind("click").click("home2", showDivReference);
+    showMyMessages.unbind("click").click("myMessages", showDivReference);
+    showLogin.unbind("click").click("login", showDivReference);
+    showModifyInfo.unbind("click").click("messagerInfo", showDivReference);
+    showModifyPass.unbind("click").click("modifyPassword", showDivReference);
+    showAboutUs.unbind("click").click("aboutus", showDivReference);
 
-    btnToTop.click(backToTop);
+    btnToTop.unbind("click").click(backToTop);
 
     showMessagerOperate.hover(function () {
         ulMessagerOperate.show();
@@ -96,13 +96,13 @@ $(function () {
         }
     });
 
-    requestRegister.click(userRegister);
-    requestLogin.click(userLogin);
-    requestLogout.click(userLogout);
-    requestForgetPwd.click(userForgetPwd);
-    requestModifyInfo.click(requestModifyMessagerInfo);
-    requestModifyPass.click(requestModifyPassword);
-    requestNewMessage.click(requestPublishMessage);
+    requestRegister.unbind("click").click(userRegister);
+    requestLogin.unbind("click").click(userLogin);
+    requestLogout.unbind("click").click(userLogout);
+    requestForgetPwd.unbind("click").click(userForgetPwd);
+    requestModifyInfo.unbind("click").click(requestModifyMessagerInfo);
+    requestModifyPass.unbind("click").click(requestModifyPassword);
+    requestNewMessage.unbind("click").click(requestPublishMessage);
 
     inputUsername.focus().blur(checkUsername);
     inputNickname.focus().blur(checkNickname);
@@ -140,6 +140,27 @@ function initFlag() {
     flagModifyEmail = false;
     flagModifyPhone = false;
     flagVerifyPass = false;
+
+    console.log($(":input").length);
+
+    let inputs = $(":input");
+    for(let temp of inputs) {
+        $(temp).val("");
+        $(temp)[0].style.border="none";
+    }
+
+    console.log($("img").length);
+    let imgs = $("img");
+
+    for(let temp of imgs) {
+        if(temp.id === "backToTop") {
+            continue ;
+        }
+        $(temp).attr('src', '');
+        $(temp).next().html("");
+    }
+
+
 }
 
 function barInit() {
@@ -347,7 +368,7 @@ function contentInit(lastMessageID) {
             showMessageList(result.data, lastMessageID);
             return result.data.length;
         } else {
-            alert(result.message);
+            customAlert(result.message);
         }
     });
     return null;
@@ -356,7 +377,7 @@ function contentInit(lastMessageID) {
 function showMessageList(messages, lastMessageID) {
     let template = "<li>" +
         "<div class=\"messInfo\">" +
-        "<label>[messagerUsername]</label><span>[date]</span>" + // style="font-size:12px;" style="margin:0px 5px;margin-right:400px;"
+        "<label>[messagerUsername]</label><span>删除</span><span>[date]</span>" + // style="font-size:12px;" style="margin:0px 5px;margin-right:400px;"
         "</div>" +
         "<div class=\"message\">" +
         "<div>" +
@@ -386,6 +407,13 @@ function showMessageList(messages, lastMessageID) {
         $(".messageEnd").show();
     }
 
+    if(PAGE_SHOW.MY_MESSAGES === flagShowPage) {
+        $(".messInfo").find("span").show();
+    }
+
+    let requestDeleteMessage = $(".messInfo").find("span");
+    requestDeleteMessage.unbind("click").click(requestMoveMessage);
+
     divLoading.slideUp(1000);
 }
 
@@ -402,17 +430,18 @@ function userRegister() {
                 checkBorndateResult + " " + checkEmailResult + " " + checkPhoneResult);
 
     if(! checkResult) {
-        alert("信息输入有误，请重新输入");
+        customAlert("信息输入有误，请重新输入");
         return false;
     }
 
     console.log(userRegister.name);
     $.getJSON(url, data, function (result) {
         if(result.state === 0) {
-            alert("注册成功");
+            customAlert("注册成功");
+            sleep(1000);
             showLogin.click();
         } else {
-            alert(result.message);
+            customAlert(result.message);
         }
     })
 }
@@ -425,12 +454,12 @@ function userLogin() {
     console.log(data);
 
     if(loginUsername == null || loginUsername === "") {
-        alert("请输入用户名");
+        customAlert("请输入用户名");
         return false;
     }
 
     if(loginPassword == null || loginPassword === "") {
-        alert("请输入密码");
+        customAlert("请输入密码");
         return false;
     }
 
@@ -440,10 +469,10 @@ function userLogin() {
             console.log(result.data);
             setCookie("username", result.data.username, 30);
             setCookie("nickname", result.data.nickname, 30);
-            // alert("登录成功");
+            // customAlert("登录成功");
             window.location.reload();
         } else {
-            alert(result.message);
+            customAlert(result.message);
         }
     })
 }
@@ -461,9 +490,9 @@ function userForgetPwd() {
     console.log(userRegister.name);
     $.getJSON(url, null, function (result) {
         if(result.state === 0) {
-            alert("注册成功");
+            customAlert("注册成功");
         } else {
-            alert(result.message);
+            customAlert(result.message);
         }
     })
 }
@@ -617,7 +646,7 @@ function checkPassword() {
         return false;
     }
 
-    let regx = /^\w+$/;;
+    let regx = /^\w+$/;
     if(! regx.test(inputPasswordVal)) {
         checkmsg.html("有非法字符");
         inputBox.style.border="1px solid red";
@@ -803,7 +832,7 @@ function showMessagerInfo() {
         if(result.state === 0) {
             fillMessagerInfo(result.data);
         } else {
-            alert(result.message);
+            customAlert(result.message);
         }
     })
 }
@@ -835,7 +864,6 @@ function requestModifyMessagerInfo() {
     let url = "user/requestModifyMessagerInfo.do";
     let data = {username: username};
     let showModifyInfo = $("#showMessagerInfo");
-    let show
 
     let checkResult = checkNicknameResult & checkBorndateResult & checkEmailResult & checkPhoneResult;
     let flagModifyResult = flagModifyNickname | flagModifyBorndate | flagModifyEmail | flagModifyPhone;
@@ -845,11 +873,11 @@ function requestModifyMessagerInfo() {
     //             checkEmailResult + " " + checkPhoneResult);
 
     if(! flagModifyResult) {
-        alert("信息没有变化，无需修改");
+        customAlert("信息没有变化，无需修改");
         return false;
     }
     if(! checkResult) {
-        alert("信息输入有误，请重新输入");
+        customAlert("信息输入有误，请重新输入");
         return false;
     }
 
@@ -870,14 +898,14 @@ function requestModifyMessagerInfo() {
 
     $.getJSON(url, data, function (result) {
         if(result.state === 0) {
-            alert("修改成功");
+            customAlert("修改成功");
             if(flagModifyNickname === true) {
                 delCookie("nickname");
                 setCookie("nickname", result.data.nickname);
                 $("#showNickname>span").text(result.data.nickname);
             }
         } else {
-            alert(result.message);
+            customAlert(result.message);
         }
         showModifyInfo.click();
     })
@@ -899,7 +927,7 @@ function verifyPassword() {
         if(result.state === 0) {
             checkmsg.empty();
             inputBox.style.border="none";
-            checkImg.attr('src', 'image/duigou.png');
+            checkImg.attr('src', urlImgCorrect);
             flagVerifyPass = true;
             if(inputPasswordVal !== null && inputPasswordVal !== "") {
                 checkPassword();
@@ -907,7 +935,7 @@ function verifyPassword() {
         } else {
             checkmsg.html("密码错误");
             inputBox.style.border="1px solid red";
-            checkImg.attr('src', 'image/wrong.png');
+            checkImg.attr('src', urlImgWrong);
             flagVerifyPass = false;
         }
     })
@@ -920,7 +948,7 @@ function requestModifyPassword() {
     let inputPasswordVal = $(":input[name='password']").eq(1).val();
     let inputOrinalPasswordVal = $(":input[name='originalPass']").val();
     if(! checkResult || inputPasswordVal === inputOrinalPasswordVal) {
-        alert("输入有误");
+        customAlert("输入有误");
         return false;
     }
 
@@ -933,10 +961,10 @@ function requestModifyPassword() {
 
     $.getJSON(url, data, function (result) {
         if(result.state === 0) {
-            alert("修改成功");
+            customAlert("修改成功");
             requestLogout.click();
         } else {
-            alert(result.message);
+            customAlert(result.message);
             showHome.click();
         }
     })
@@ -953,16 +981,43 @@ function requestPublishMessage() {
 
     if(null === messageInfo.val() || "" === messageInfo.val()) {
         // messageInfo.style.backgroundColor = "";
-        alert("留言为空");
+        customAlert("留言为空");
         return ;
     }
 
     $.getJSON(url, data, function (result) {
         if(result.state === 0) {
-             // alert("留言成功");
+             // customAlert("留言成功");
              window.location.reload();
         } else {
-            alert(result.message);
+            customAlert(result.message);
         }
     });
+}
+
+function requestMoveMessage() {
+    let url = "message/deleteMessage.do";
+    let messageID = $(this).parent().parent().data("messageID");
+    let data = {messageID: messageID};
+    let showMyMessages = $("#showMyMessages");
+
+    console.log(requestMoveMessage.name);
+    console.log(this.innerText);
+
+    switch (this.innerText) {
+        case "删除":
+            operateConfirm("是否确认删除此留言?", function () {
+                $.getJSON(url, data, function (result) {
+                    if(result.state === 0) {
+                        // customAlert("删除成功！");
+                        showMyMessages.click();
+                    } else {
+                        customAlert(result.message);
+                    }
+                })
+            });
+            break;
+        default :
+            break;
+    }
 }

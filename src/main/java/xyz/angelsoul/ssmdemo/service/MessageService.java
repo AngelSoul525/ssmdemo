@@ -14,17 +14,27 @@ public interface MessageService {
      * @param messageInfo message info
      * @return success return message info else return null
      */
-    public Message saveMessage(String username, String messageInfo);
+    Message saveMessage(String username, String messageInfo);
 
     /**
      * paging query messages
      * @param lastMessageID last message id
      * @return return messages
      */
-    public List<Map<String, Object>> queryMessages(String lastMessageID);
+    List<Map<String, Object>> queryMessages(String lastMessageID);
 
     /**
      * paging query messages by username
+     * @param username username want to query message
+     * @param lastMessageID if 0 query since the first message or query since lastMessageID
+     * @return return messages
      */
-    public List<Map<String, Object>> queryMessagesByUsername(String username, String lastMessageID);
+    List<Map<String, Object>> queryMessagesByUsername(String username, String lastMessageID);
+
+    /**
+     * delete message
+     * @param messageID the message ID want to delete
+     * @return return if success delete
+     */
+    int deleteMessage(int messageID);
 }

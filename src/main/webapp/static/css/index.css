@@ -111,6 +111,7 @@ body{
 .newMessaageTitle {
     font-size: 20px;
     font-family: 隶书, serif;
+    cursor: default;
     /*margin-bottom: 3px;*/
     padding-left: 10px;
 }
@@ -158,6 +159,10 @@ body{
     float: right;
 }
 
+.newMessaage span:hover {
+    background-color: antiquewhite;
+}
+
 .messageEnd {
     background-color: #e6e7e8;
     display: none;
@@ -193,12 +198,33 @@ body{
     border-bottom:1px solid red;
     padding-bottom: 2px;
     margin: 5px 5px 0;
-    position: static;
+    position: relative;
 }
 
 .messInfo span {
+    background-color: wheat;
+    width: 50px;
+    font-size: 15px;
+    text-align: center;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 150px;
+    float: right;
+}
+
+.messInfo span:hover {
+    background-color: antiquewhite;
+}
+
+.messInfo span:last-child {
+    background-color: silver;
+    width: auto;
     font-size: 12px;
-    position: relative;
+    display: block;
+    cursor: default;
+    position: absolute;
     top: 13px;
     right: 10px;
     float: right;
@@ -211,6 +237,7 @@ body{
     background-color:#f5f5f5;
     margin: 0 5px 5px;
     padding-top: 2px;
+    cursor: default;
     position: relative;
     /*border:1px solid #666464;*/
 }

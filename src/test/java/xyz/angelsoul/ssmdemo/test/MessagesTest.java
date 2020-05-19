@@ -77,6 +77,17 @@ public class MessagesTest {
         System.out.println(res);
     }
 
+    @Test
+    public void testDeleteMessage() {
+        Message message = new Message();
+
+        message.setMessageID(14);
+        message.setDeleteTime(new Date().getTime());
+        message.setIsDelete(CONSTANTS.STATUS_DELETE);
+        
+        System.out.println(messagesDao.updateMessage(message));
+    }
+
 
     @Test
     public void testSaveMessage() {

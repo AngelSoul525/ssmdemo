@@ -6,7 +6,7 @@
     <select id="selectMessagesByUsername" parameterType="map" resultType="map">
         select message_id messageID, username, create_time createTime, delete_time deleteTime,
             message_title messageTitle, message_content messageContent, star_num starNum, is_delete isDelete
-        from message where username = #{username}
+        from message where username = #{username} and is_delete = 0
         <if test="lastMessageID != 0">
             and create_time &lt; (select create_time createTime from message where message_id = #{lastMessageID})
         </if>
@@ -18,9 +18,9 @@
     <select id="selectMessages" parameterType="map" resultType="map">
         select message_id messageID, username, create_time createTime, delete_time deleteTime,
             message_title messageTitle, message_content messageContent, star_num starNum, is_delete isDelete
-        from message
+        from message where is_delete = 0
         <if test="lastMessageID != 0">
-            where create_time &lt; (select create_time createTime from message where message_id = #{lastMessageID})
+            and create_time &lt; (select create_time createTime from message where message_id = #{lastMessageID})
         </if>
         order by create_time desc
         limit #{messagesNum}
@@ -34,29 +34,29 @@
             (#{messageID}, #{username}, #{createTime}, #{deleteTime}, #{messageTitle}, #{messageContent}, #{starNum}, #{isDelete})
     </insert>
 
-    <!-- updateMessagerInfo(Messager messager)
-    <update id="updateMessagerInfo" parameterType="map">
-        update userinfo
+    <!-- updateMessage(Message message) -->
+    <update id="updateMessage" parameterType="map">
+        update message
         set
         <trim suffixOverrides="," prefixOverrides=",">
-            <if test="password != null">
-                userpassword = #{password},
+            <if test="deleteTime != 0">
+                delete_time = #{deleteTime},
             </if>
-            <if test="nickname != null">
-                nickname = #{nickname},
+            <if test="messageTitle != null">
+                message_title = #{messageTitle},
             </if>
-            <if test="borndate != null">
-                borntime = #{borndate},
+            <if test="messageContent != null">
+                message_content = #{messageContent},
             </if>
-            <if test="email != null">
-                email = #{email},
+            <if test="starNum != 0">
+                star_num = #{starNum},
             </if>
-            <if test="phone != null">
-                mobilephone = #{phone},
+            <if test="isDelete != 0">
+                is_delete = #{isDelete},
             </if>
         </trim>
-        where username = #{username}
-    </update>-->
+        where message_id = #{messageID}
+    </update>
 
     <!-- selectMessagerByNickname(String nickname)
     <select id="selectMessagerByNickname" parameterType="String" resultType="xyz.angelsoul.ssmdemo.model.Messager">
