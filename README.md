@@ -22,20 +22,24 @@ MySql 8.0<br/>
 ### 3. modify database password to stay the same with cloud server
 ### 4. hide messageEnd while show home
 
+
 ## V1.0.3
 
 ### 1. fix database connection would time-outs after not operating for 8 hours
 ### 2. add loading animation
 
+
 ## V1.0.4
 
 ### 1. fix query 10 messages a time to query 15 messages a time
+
 
 ## V1.0.5
 
 ### 1.use endlessScroll function to reduce the number of query messages
 ### 2.remove the alert dialog when login success and publish message success
 ### 3.add query my published messages function
+
 
 ## V1.0.6
 
