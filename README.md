@@ -1,5 +1,6 @@
 # ssmdemo
 record daily life
+visit website: http://129.204.29.20/ssmdemo/
 
 ## develop environment
 IDEA<br/>
