@@ -33,3 +33,6 @@ MySql 8.0<br/>
 ### 3. unbind click event before bind click event
 ### 4. fix validation message residue problem
 ### 5. update some jar versions and jquery version to resolve GitHub dependency security warnings.<br/>
+## V1.0.7
+### 1.add password transport and save encryption
+### 2.fix mysql connector driver dependabot alert
