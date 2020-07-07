@@ -1,5 +1,8 @@
-function setCookie(c_name, value){
-    document.cookie=c_name+ "=" + value;
+
+let crypt = new JSEncrypt();
+
+function setCookie(c_name, value) {
+    document.cookie = c_name + "=" + value;
 }
 
 function getCookie(name) {
@@ -52,13 +55,25 @@ function unixToDate(unixTimeTem, isFull, timeZoneTem) {
 }
 
 
-function customAlert(alertText) {
+function customAlert(alertText, okFunction) {
     $.alert({
         title: 'Alert',
         content: alertText,
         useBootstrap: false,
         boxWidth: '300px',
         draggable: false,
+        buttons: {
+            ok:{
+                text: "确认",
+                action: function () {
+                    if(okFunction !== undefined) {
+                        okFunction();
+                    } else {
+                        return ;
+                    }
+                }
+            }
+        }
     });
 }
 
@@ -86,4 +101,27 @@ function operateConfirm(text, okFunction) {
             }
         }
     });
+}
+
+function encryInit() {
+    let pubKey = '-----BEGIN PUBLIC KEY-----' +
+        'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDg6pZm2SmddLm1BKyeXhTDkaVg' +
+        'nW4fxP6YHQckIu2ghVY6D1NURco7fhYorNG4PCpU0UUK/uRwEoyvIIyNxNf4TYQl' +
+        'thx6jN8jayF3kZn3skk2fAK7XSseGlMhC2pPdc5tgsnvvJYkOdIl4MIt9GOv7TjA' +
+        'wDrDWG0ohmcBeSGSlQIDAQAB' +
+        '-----END PUBLIC KEY-----';
+
+    crypt.setPublicKey(pubKey);
+
+    // let prikey = "private key";
+    //
+    // crypt.setPrivateKey(prikey);
+}
+
+function encryptPass(pass) {
+    return crypt.encrypt(pass);
+}
+
+function decryptPass(encryPass) {
+    return crypt.decrypt(encryPass);
 }

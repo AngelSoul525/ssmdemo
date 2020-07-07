@@ -5,9 +5,11 @@ import xyz.angelsoul.ssmdemo.dao.MessagerDao;
 import xyz.angelsoul.ssmdemo.model.Messager;
 import xyz.angelsoul.ssmdemo.utils.CONSTANTS;
 import xyz.angelsoul.ssmdemo.utils.RETURN_CODE;
+import xyz.angelsoul.ssmdemo.utils.RSAUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.rmi.server.ExportException;
 import java.util.Date;
 
 @Service("messagerOperateService")
@@ -74,8 +76,13 @@ public class MessagerOperateServiceImp implements MessagerOperateService {
             throw new RuntimeException("用户不存在");
         }
 
-        if(! checkRes.getPassword().equals(originalPassword)) {
-            throw new RuntimeException("密码错误");
+        try {
+            if(! RSAUtils.RSADecrypt(checkRes.getPassword()).equals(RSAUtils.RSADecrypt(originalPassword))) {
+                throw new RuntimeException("密码错误");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException("服务器异常，请稍后重试");
         }
 
         Messager messager = new Messager();
@@ -112,10 +119,18 @@ public class MessagerOperateServiceImp implements MessagerOperateService {
         Messager res = messagerDao.selectMessagerByUsername(messager.getUsername());
         if(res != null){
             System.out.println("[messagerLogin] " + res.toString());
-            if(!res.getPassword().equals(messager.getPassword())) {
-                return RETURN_CODE.ERROR_PASSWORD;
+            try {
+                if(!(RSAUtils.RSADecrypt(res.getPassword()).equals(RSAUtils.RSADecrypt(messager.getPassword())))) {
+                    return RETURN_CODE.ERROR_PASSWORD;
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                throw new RuntimeException("服务器异常，请稍后重试");
             }
-            return res;
+            Messager resMessager = new Messager();
+            resMessager.setUsername(res.getUsername());
+            resMessager.setNickname(res.getNickname());
+            return resMessager;
         }
         return null;
     }

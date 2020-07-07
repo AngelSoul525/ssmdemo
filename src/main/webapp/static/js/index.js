@@ -63,6 +63,7 @@ $(function () {
     barInit();
     contentInit(0);
     loadflushEvent();
+    encryInit();
 
     showRegister.unbind("click").click("register", showDivReference);
     showHome.unbind("click").click("home", showDivReference);
@@ -420,21 +421,27 @@ function showMessageList(messages, lastMessageID) {
 /***************************用户操作相关*************************/
 function userRegister() {
     let url = "user/register.do";
-    let data = $("#registInfo").serialize();
+    let data = $("#registInfo").serializeArray();
     let showLogin = $("#showLogin");
+
+    console.log(userRegister.name);
 
     let checkResult = checkUsernameResult & checkNicknameResult & checkPasswordResult &
             checkBorndateResult & checkEmailResult & checkPhoneResult;
 
     console.log(checkUsernameResult + " " + checkNicknameResult + " " + checkPasswordResult + " " +
                 checkBorndateResult + " " + checkEmailResult + " " + checkPhoneResult);
-
     if(! checkResult) {
         customAlert("信息输入有误，请重新输入");
         return false;
+
     }
 
-    console.log(userRegister.name);
+    console.log(data);
+    data[2].value = encryptPass(data[2].value);
+    data[3].value = encryptPass(data[3].value);
+    // console.log(data[2].value);
+
     $.getJSON(url, data, function (result) {
         if(result.state === 0) {
             customAlert("注册成功");
@@ -450,8 +457,6 @@ function userLogin() {
     let url = "user/login.do";
     let loginUsername = $(":input[name='loginUsername']").val().trim();
     let loginPassword = $(":input[name='loginPassword']").val().trim();
-    let data = {username:loginUsername, password:loginPassword};
-    console.log(data);
 
     if(loginUsername == null || loginUsername === "") {
         customAlert("请输入用户名");
@@ -463,6 +468,7 @@ function userLogin() {
         return false;
     }
 
+    let data = {username:loginUsername, password:encryptPass(loginPassword)};
     console.log(userLogin.name);
     $.getJSON(url, data, function (result) {
         if(result.state === 0) {
@@ -627,7 +633,7 @@ function checkPassword() {
     let checkmsg = flagShowPage === PAGE_SHOW.REGISTER ? $("#password_msg") : $("#newPassword_msg");
     let inputBox = $(":input[name='password']")[numCheck];
 
-    console.log("[" + checkPassword.name + "]" + inputPasswordVal);
+    console.log("[" + checkPassword.name + "]");//+ inputPasswordVal
     checkPasswordResult = false;
 
     if(inputOrinalPasswordVal !== null && inputOrinalPasswordVal !== "") {
@@ -680,7 +686,7 @@ function checkRepwd() {
     let checkmsg = flagShowPage === PAGE_SHOW.REGISTER ? $("#repwd_msg") : $("#newRepwd_msg");
     let inputBox = $(":input[name='repwd']")[numCheck];
 
-    console.log("[" + checkRepwd.name + "]" + inputRepwdVal);
+    console.log("[" + checkRepwd.name + "]"); // + inputRepwdVal
     checkPasswordResult = false;
 
     if(inputRepwdVal == null || inputRepwdVal === "") {
@@ -920,6 +926,7 @@ function verifyPassword() {
     let inputPasswordVal = $(":input[name='password']").eq(1).val();
     let url = "user/login.do";
     let username = getCookie("username");
+    inputPassVal = encryptPass(inputPassVal);
     let data = {username:username, password: inputPassVal};
 
     console.log(verifyPassword.name + " " + inputPassVal);
@@ -957,12 +964,17 @@ function requestModifyPassword() {
 
     let url = "user/requestModifyPassword.do";
     let username = getCookie("username");
+    inputOrinalPasswordVal = encryptPass(inputOrinalPasswordVal);
+    inputPasswordVal = encryptPass(inputPasswordVal);
     let data = {username: username, originalPassword: inputOrinalPasswordVal, newPassword: inputPasswordVal};
 
     $.getJSON(url, data, function (result) {
         if(result.state === 0) {
-            customAlert("修改成功");
-            requestLogout.click();
+            customAlert("修改成功,请重新登录", function () {
+                requestLogout.click();
+            });
+            // sleep(3000);
+            // requestLogout.click();
         } else {
             customAlert(result.message);
             showHome.click();
